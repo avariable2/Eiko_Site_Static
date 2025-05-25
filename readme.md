@@ -1,36 +1,91 @@
+# Eiko Static Site
 
->[!NOTE]
-This theme uses GSAP library, make sure to refer to their licensing.
+A lightweight, static landing page template for Eiko, featuring smooth GSAP animations and Tailwind CSS with prefixed utility classes for easy differentiation and customization.
 
+---
 
-**Github**: https://github.com/PaulleDemon/awesome-landing-pages
+## Demo
 
-## Usage
+Live demo available at: [https://eiko-example.com](https://eiko-example.com)
 
-* This template uses tailwind css every tailwind class are prefixed with `tw-`, to help differentiate
-  between tailwind classes and other classes  
+---
 
-During development add the following to head tag
+## Features
+
+- **GSAP Animations**: Scroll-triggered and timeline-based animations for engaging user experiences
+- **Tailwind CSS**: Utility-first styling with `tw-` prefix to avoid class name conflicts
+- **Responsive Design**: Mobile-first layout that adapts seamlessly across screen sizes
+- **Static Hosting Ready**: Preconfigured for deployment on platforms like Heroku and Netlify
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js v14 or higher
+- npm or Yarn
+
+### Installation
+
+```bash
+git clone https://github.com/avariable2/eiko-site-static.git
+cd eiko-site-static
+npm install
+````
+
+---
+
+## Development
+
+Include the Tailwind runtime stylesheet in `public/index.html`:
 
 ```html
-<link rel="stylesheet" href="tailwind-runtime.css"><!--replace with path to your tailwind runtime-->
+<link rel="stylesheet" href="tailwind-runtime.css" />
 ```
-During production use
 
-```html
-<link rel="stylesheet" href="tailwind-build.css"><!--replace with path to your tailwind build-->
-```
+Start Tailwind watcher and server:
 
-To start Tailwind during development use
-```html
+```bash
 npm run start:tailwind
+npm start
 ```
 
-To create a build file use
-```html
+---
+
+## Production Build
+
+```bash
 npm run build:tailwind
+npm run build && npm start
 ```
 
-Theme: 
-1. #155eef
-2. 
+---
+
+## Deployment
+
+* **Heroku**: Uses `Procfile` for the Node.js server
+* **Netlify**: Drop the `public` folder and include `static.json`
+
+---
+
+## File Structure
+
+```text
+eiko-site-static/
+├── .well-known/          # Security & SEO configs
+├── node_modules/
+├── public/               # HTML, CSS, JS, and images
+├── Procfile
+├── package.json
+├── package-lock.json
+├── README.md
+├── server.js
+└── static.json
+```
+
+---
+
+## License
+
+The GSAP library is used under its own license. Remaining code is MIT-licensed; see `LICENSE`.
