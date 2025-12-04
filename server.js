@@ -88,7 +88,20 @@ app.get('/en/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'en', 'index.html'));
 });
 
-// Route catch-all pour les autres chemins
+// Middleware pour servir la nouvelle version sur /new (doit être avant la route catch-all)
+app.use('/new', express.static(path.join(__dirname, 'public-new')));
+
+// Route pour servir la nouvelle version (index.html)
+app.get('/new', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public-new', 'index.html'));
+});
+
+// Route catch-all pour /new/* (pour les routes SPA de la nouvelle version)
+app.get('/new/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public-new', 'index.html'));
+});
+
+// Route catch-all pour les autres chemins (doit être en dernier)
 app.get('*', (req, res) => {
     const lang = detectLanguage(req);
     res.sendFile(path.join(__dirname, 'public', lang, 'index.html'));
