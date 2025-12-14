@@ -2,35 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Middleware pour servir les fichiers statiques - configuration simplifiée
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Middleware pour détecter la langue à partir de l'en-tête 'Accept-Language'
-function detectLanguage(req) {
-    const acceptLanguage = req.headers['accept-language'];
-    if (!acceptLanguage) return 'en'; // Langue par défaut : anglais
-
-    const languages = acceptLanguage.split(',').map(lang => lang.split(';')[0].trim().toLowerCase());
-
-    // Liste des langues supportées
-    const supportedLanguages = ['fr', 'en'];
-
-    for (let lang of languages) {
-        if (supportedLanguages.includes(lang)) {
-            return lang;
-        }
-        // Vérifie si la langue commence par un code supporté (e.g., 'fr-CA' -> 'fr')
-        for (let supportedLang of supportedLanguages) {
-            if (lang.startsWith(supportedLang)) {
-                return supportedLang;
-            }
-        }
-    }
-
-    return 'en'; // Langue par défaut si aucune langue supportée n'est trouvée
-}
+const PORT = process.env.PORT || 8080;
 
 // Route spécifique pour apple-app-site-association
 app.get('/apple-app-site-association', (req, res) => {
@@ -62,49 +34,10 @@ app.get('/.well-known/assetlinks.json', (req, res) => {
     });
 });
 
-// Routes pour les segments spécifiques (referral, user)
-app.get(['/referral/:code', '/user/:id'], (req, res) => {
-    const lang = detectLanguage(req);
-    
-    // Au lieu de rediriger, servir directement le fichier index.html approprié
-    res.sendFile(path.join(__dirname, 'public', lang, 'index.html'));
-});
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Route pour les pages de langue racine
-app.get('/fr', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'fr', 'index.html'));
-});
-
-app.get('/en', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'en', 'index.html'));
-});
-
-// Routes pour les sous-chemins de langue
-app.get('/fr/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'fr', 'index.html'));
-});
-
-app.get('/en/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'en', 'index.html'));
-});
-
-// Middleware pour servir la nouvelle version sur /new (doit être avant la route catch-all)
-app.use('/new', express.static(path.join(__dirname, 'public-new')));
-
-// Route pour servir la nouvelle version (index.html)
-app.get('/new', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public-new', 'index.html'));
-});
-
-// Route catch-all pour /new/* (pour les routes SPA de la nouvelle version)
-app.get('/new/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public-new', 'index.html'));
-});
-
-// Route catch-all pour les autres chemins (doit être en dernier)
 app.get('*', (req, res) => {
-    const lang = detectLanguage(req);
-    res.sendFile(path.join(__dirname, 'public', lang, 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Démarrage du serveur
