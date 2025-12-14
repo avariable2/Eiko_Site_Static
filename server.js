@@ -34,24 +34,30 @@ app.get('/.well-known/assetlinks.json', (req, res) => {
     });
 });
 
+// Routes spécifiques pour la version anglaise - AVANT express.static
+// Gestion de toutes les variantes de casse et trailing slash
+// Note: Le dossier dans Git est 'en' (minuscules), donc on utilise 'en' ici
+const enRoutes = ['/EN', '/EN/', '/en', '/en/'];
+enRoutes.forEach(route => {
+    app.get(route, (req, res) => {
+        const filePath = path.join(__dirname, 'public', 'en', 'index.html');
+        console.log(`Serving English version from: ${filePath}`);
+        res.sendFile(filePath);
+    });
+});
+
+// Route pour les fichiers statiques dans en/ (assets, CSS, JS)
+// Cela permet de servir les fichiers statiques depuis /EN/assets/, /EN/style.css, etc.
+// Note: Le dossier réel est 'en' (minuscules) mais on accepte /EN/ dans l'URL
+app.use('/EN', express.static(path.join(__dirname, 'public', 'en'), {
+    index: false // Ne pas servir index.html automatiquement pour /EN/
+}));
+app.use('/en', express.static(path.join(__dirname, 'public', 'en'), {
+    index: false // Ne pas servir index.html automatiquement pour /en/
+}));
+
+// Servir les fichiers statiques APRÈS les routes spécifiques
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Route spécifique pour la version anglaise
-app.get('/EN', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'EN', 'index.html'));
-});
-
-app.get('/EN/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'EN', 'index.html'));
-});
-
-app.get('/en', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'EN', 'index.html'));
-});
-
-app.get('/en/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'EN', 'index.html'));
-});
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
