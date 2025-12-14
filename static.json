@@ -7,6 +7,10 @@
         },
         "file": "/.well-known/apple-app-site-association"
       },
+      "/EN": "EN/index.html",
+      "/EN/": "EN/index.html",
+      "/en": "EN/index.html",
+      "/en/": "EN/index.html",
       "/**": "index.html"
     }
   }
