@@ -125,7 +125,13 @@ body {
     position: relative;
 }
 
-
+.hero .soon {
+    font-size: 16px;
+    font-weight: 300;
+    color: #000000;
+    line-height: 1.5;
+    margin-top: 24px;
+}
 
 .emoji-cry {
     display: inline-block;

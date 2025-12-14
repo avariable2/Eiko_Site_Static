@@ -36,6 +36,23 @@ app.get('/.well-known/assetlinks.json', (req, res) => {
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Route spécifique pour la version anglaise
+app.get('/EN', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'EN', 'index.html'));
+});
+
+app.get('/EN/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'EN', 'index.html'));
+});
+
+app.get('/en', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'EN', 'index.html'));
+});
+
+app.get('/en/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'EN', 'index.html'));
+});
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
