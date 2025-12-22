@@ -1,16 +1,16 @@
 {
   "applinks": {
     "_comment": "7L8GMM3455.com.gavy.eiko",
-      "apps": [],
-      "details": [
-          {
-              "appID": "",
-              "paths": [
-                  "/user/*",
-                  "/referral/*",
-                  "/"
-              ]
-          }
-      ]
+    "apps": [],
+    "details": [
+        {
+            "appID": "7L8GMM3455.com.gavy.eiko",
+            "paths": [
+                "/user/*",
+                "/referral/*",
+                "/"
+            ]
+        }
+    ]
   }
 }
